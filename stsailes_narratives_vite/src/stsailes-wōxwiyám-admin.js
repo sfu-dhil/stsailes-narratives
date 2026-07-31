@@ -1,0 +1,1 @@
+import './assets/stsailes-wōxwiyám-admin.scss'

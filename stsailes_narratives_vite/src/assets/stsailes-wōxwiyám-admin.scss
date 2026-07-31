@@ -1,0 +1,12 @@
+// first nations unicode
+@import "./first_nations_unicode/font.css";
+
+body {
+  font-family: 'First Nations Unicode', 'Roboto', 'Lucida Grande', Verdana, Arial, sans-serif;
+}
+:root {
+  --font-family-primary: "First Nations Unicode", "Segoe UI", system-ui, Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-family-monospace: "First Nations Unicode", ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono", "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro", "Fira Mono", "Droid Sans Mono", "Courier New", monospace, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-sans-serif: "First Nations Unicode", "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
+}
