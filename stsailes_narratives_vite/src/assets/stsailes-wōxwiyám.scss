@@ -1,8 +1,16 @@
 // first nations unicode
 @import "./first_nations_unicode/font.css";
 
-html {
-    font-size: 14px;
+html,
+body {
+  font-size: 14px;
+}
+
+:root {
+  /* 'First Nations Unicode', 'Roboto', 'Lucida Grande', Verdana, Arial, sans-serif; */
+  --bs-font-sans-serif: "First Nations Unicode", "Helvetica Neue", Arial, sans-serif;
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-font-monospace: "First Nations Unicode", "Helvetica Neue", Arial, sans-serif;
 }
 
 .modal-backdrop {
@@ -14,12 +22,4 @@ html {
 
 .tooltip {
   z-index: 9001;
-}
-
-body {
-  font-family: 'First Nations Unicode', 'Roboto', 'Lucida Grande', Verdana, Arial, sans-serif;
-}
-:root {
-    --bs-font-sans-serif: "First Nations Unicode", "Helvetica Neue", Arial, sans-serif;
-    --bs-body-font-family: var(--bs-font-sans-serif);
 }

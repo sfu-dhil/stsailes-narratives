@@ -3,7 +3,7 @@ import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
 import { useDisplayStore, useDisplayImageModalStore, useDisplayImageGalleryModalStore } from './stores/display.js'
 import LoadingDots from './components/LoadingDots.vue'
-import MapSelectOffSidebar from './components/MapSelectOffSidebar.vue'
+import MapSelectSidebar from './components/MapSelectSidebar.vue'
 import FeatureSelectSidebar from './components/FeatureSelectSidebar.vue'
 import FeatureSidebar from './components/FeatureSidebar.vue'
 import InfoPageSelectSidebar from './components/InfoPageSelectSidebar.vue'
@@ -39,7 +39,7 @@ const {
       </template>
     </RouterView>
     <Suspense>
-      <MapSelectOffSidebar />
+      <MapSelectSidebar />
       <template #fallback><LoadingDots /></template>
     </Suspense>
     <Suspense>

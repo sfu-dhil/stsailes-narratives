@@ -2,12 +2,11 @@
 import { ref, watch, computed, nextTick, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { storeToRefs } from 'pinia'
-import { Tooltip } from 'bootstrap'
 import { useFullscreen } from '@vueuse/core'
-import { _stopAllMedia } from '../_utils.js'
+import { _stopAllMedia, resetTooltips } from '../_utils.js'
 import LoadingDots from './LoadingDots.vue'
 import { useMapsStore, useFeaturesStore } from '../stores/data.js'
-import { useDisplayStore, useDisplayOpenlayersStore, useDisplayPannellumStore } from '../stores/display.js'
+import { useDisplayStore, useDisplayOpenlayersStore } from '../stores/display.js'
 import { MapResourceTypes } from '../_resourceTypes.js'
 import Openlayers from './maps/Openlayers.vue'
 import Pannellum from './maps/Pannellum.vue'
@@ -30,18 +29,11 @@ const map = computed(() => objectId.value && mapObjectMap.value.has(objectId.val
 const mapWrapperRef = ref(null)
 const { isFullscreen, toggle: toggleFullscreen } = useFullscreen(mapWrapperRef)
 const mapRef = ref(null)
-const resetTooltips = () => {
-  nextTick(() => {
-    mapWrapperRef.value.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(
-      (tooltipTriggerEl) => Tooltip.getOrCreateInstance(tooltipTriggerEl, {container: mapWrapperRef.value})
-    )
-  })
-}
 watch(isFullscreen, (oldValue, newValue) => {
-  if (newValue != oldValue) { resetTooltips() }
+  if (newValue !== oldValue) { nextTick(() => resetTooltips(mapWrapperRef.value)) }
 })
 watch(mapRef, (oldValue, newValue) => {
-  if (newValue != oldValue) { resetTooltips() }
+  if (newValue !== oldValue) { nextTick(() => resetTooltips(mapWrapperRef.value)) }
 })
 watch(() => route.params.id, (newValue, oldValue) => {
   if (newValue !== oldValue) { _stopAllMedia() }
@@ -57,7 +49,7 @@ watch(() => route.params.id, (newValue, oldValue) => {
         <span class="navbar-text"></span>
       </div>
     </nav>
-    <div ref="mapWrapperRef" class="position-absolute z-1 w-100 h-100">
+    <div ref="mapWrapperRef" class="map-wrapper position-absolute z-1 w-100 h-100">
       <Suspense v-if="map && [MapResourceTypes.overheadImageMap, MapResourceTypes.xyzMap].includes(map.resourcetype)">
         <Openlayers ref="mapRef" :key="map.id" :mapId="map.id" />
         <template #fallback><LoadingDots /></template>
@@ -107,7 +99,7 @@ watch(() => route.params.id, (newValue, oldValue) => {
       <div v-if="mapRef" class="z-3 position-absolute top-0 end-0 btn-group-vertical text-center"
         :class="{ 'top-left-btn-group-offset': !isFullscreen }"
       >
-        <button @click="() => { toggleFullscreen(); resetTooltips() }"
+        <button @click="toggleFullscreen"
           type="button" class="btn btn-link text-light link-underline-opacity-0"
           data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="Toggle Fullscreen Mode"
         >
@@ -156,6 +148,9 @@ watch(() => route.params.id, (newValue, oldValue) => {
 </template>
 
 <style lang="scss" scoped>
+.map-wrapper {
+  font-size: 14px;
+}
 .top-left-btn-group-offset {
   margin-top: 4em;
 }
